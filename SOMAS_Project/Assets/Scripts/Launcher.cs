@@ -27,6 +27,8 @@ private byte maxPlayersPerRoom = 4;
         /// </summary>
         string gameVersion = "1";
 
+        //private GameObject popup;
+
 
         #endregion
 
@@ -50,7 +52,7 @@ private byte maxPlayersPerRoom = 4;
         /// </summary>
         void Start()
         {
-            Connect();
+            //Connect();
         }
 
 
@@ -71,7 +73,7 @@ private byte maxPlayersPerRoom = 4;
             if (PhotonNetwork.IsConnected)
             {
                 // #Critical we need at this point to attempt joining a Random Room. If it fails, we'll get notified in OnJoinRandomFailed() and we'll create one.
-                PhotonNetwork.JoinRandomRoom();
+                PhotonNetwork.JoinRoom("Room Name");;
             }
             else
             {
@@ -94,6 +96,11 @@ private byte maxPlayersPerRoom = 4;
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
     }
 
+    public override void OnJoinedLobby()
+    {
+        Debug.Log("JoinRandom");
+        PhotonNetwork.JoinRoom("Room Name");;
+    }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
@@ -101,17 +108,26 @@ private byte maxPlayersPerRoom = 4;
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
-{
-    Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
+    {
+        Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
 
-    // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
-    PhotonNetwork.CreateRoom(null, new RoomOptions());
-}
+        // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
+        PhotonNetwork.CreateRoom(null, new RoomOptions());
+    }
 
-public override void OnJoinedRoom()
-{
-    Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
-}
+    public override void OnJoinedRoom()
+    {    
+        if (PhotonNetwork.PlayerList.Length == 2) 
+        {
+            Debug.Log("2 players yey");
+            PhotonNetwork.LoadLevel ("StandardTrack");
+        } 
+        else if (PhotonNetwork.PlayerList.Length == 1) 
+        {
+            Debug.Log ("Not Enough Players");
+            //popup.SetActive (true);
+        }
+    }
 
 
     #endregion
