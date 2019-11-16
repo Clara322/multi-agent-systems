@@ -73,13 +73,15 @@ private byte maxPlayersPerRoom = 4;
             if (PhotonNetwork.IsConnected)
             {
                 // #Critical we need at this point to attempt joining a Random Room. If it fails, we'll get notified in OnJoinRandomFailed() and we'll create one.
-                PhotonNetwork.JoinRoom("Room Name");;
+                PhotonNetwork.JoinRandomRoom(null, 0);
+                Debug.Log("Tried joining random room");
             }
             else
             {
                 // #Critical, we must first and foremost connect to Photon Online Server.
                 PhotonNetwork.GameVersion = gameVersion;
                 PhotonNetwork.ConnectUsingSettings();
+                Debug.Log("Got to the else in connect");
             }
         }
 
@@ -91,15 +93,10 @@ private byte maxPlayersPerRoom = 4;
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
+        //Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
         // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
-    }
-
-    public override void OnJoinedLobby()
-    {
-        Debug.Log("JoinRandom");
-        PhotonNetwork.JoinRoom("Room Name");;
+        PhotonNetwork.CreateRoom("Room");
+        Debug.Log("Created THE ROOM");
     }
 
     public override void OnDisconnected(DisconnectCause cause)
