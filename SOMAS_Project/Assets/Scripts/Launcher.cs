@@ -8,6 +8,7 @@ namespace Com.MyCompany.MyGame
 {
     public class Launcher : MonoBehaviourPunCallbacks
     {
+
         #region Private Serializable Fields
         /// <summary>
 /// The maximum number of players per room. When a room is full, it can't be joined by new players, and so new room will be created.
@@ -73,7 +74,7 @@ private byte maxPlayersPerRoom = 4;
             if (PhotonNetwork.IsConnected)
             {
                 // #Critical we need at this point to attempt joining a Random Room. If it fails, we'll get notified in OnJoinRandomFailed() and we'll create one.
-                PhotonNetwork.JoinRandomRoom(null, 0);
+                PhotonNetwork.JoinRandomRoom();
                 Debug.Log("Tried joining random room");
             }
             else
@@ -81,22 +82,41 @@ private byte maxPlayersPerRoom = 4;
                 // #Critical, we must first and foremost connect to Photon Online Server.
                 PhotonNetwork.GameVersion = gameVersion;
                 PhotonNetwork.ConnectUsingSettings();
-                Debug.Log("Got to the else in connect");
+                Debug.Log("Need to start the conection");
             }
+        }
+        public override void OnPlayerEnteredRoom(Player newPlayer)
+        {
+            //Doesn't get called on the local player, just remote players, so you would still need something to handle on the second player
+            if (PhotonNetwork.PlayerList.Length == 2)
+            {
+                PhotonNetwork.LoadLevel("Scene1");
+            }
+            else if (PhotonNetwork.PlayerList.Length == 1)
+            {
+                Debug.Log("Not Enough PLayers");
+            }
+
         }
 
 
-    #endregion
-
-    #region MonoBehaviourPunCallbacks Callbacks
 
 
+        #endregion
+
+        #region MonoBehaviourPunCallbacks Callbacks
+
+
+    private bool changeSceneFlag = false;
+    
     public override void OnConnectedToMaster()
     {
-        //Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
-        // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
-        PhotonNetwork.CreateRoom("Room");
-        Debug.Log("Created THE ROOM");
+            //Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
+            // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
+            //PhotonNetwork.CreateRoom("Room");
+            //PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = this.maxPlayersPerRoom });
+        Debug.Log("OnConnectedToMaster has been called");
+        PhotonNetwork.JoinRandomRoom();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -108,16 +128,19 @@ private byte maxPlayersPerRoom = 4;
     {
         Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
 
-        // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
-        PhotonNetwork.CreateRoom(null, new RoomOptions());
+            // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
+            PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = this.maxPlayersPerRoom });
     }
 
     public override void OnJoinedRoom()
-    {    
+    {
+            Debug.Log("hello");
         if (PhotonNetwork.PlayerList.Length == 2) 
         {
-            Debug.Log("2 players yey");
-            PhotonNetwork.LoadLevel ("StandardTrack");
+                changeSceneFlag = true;
+                Debug.Log("2 players yey");
+            PhotonNetwork.LoadLevel ("Scene1");
+
         } 
         else if (PhotonNetwork.PlayerList.Length == 1) 
         {
@@ -125,8 +148,8 @@ private byte maxPlayersPerRoom = 4;
             //popup.SetActive (true);
         }
     }
+       
 
-
-    #endregion
+        #endregion
     }
 }
