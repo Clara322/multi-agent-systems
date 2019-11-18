@@ -18,7 +18,7 @@ namespace Com.MyCompany.MyGame
         [Tooltip("The prefab to use for representing the player")]
         public GameObject playerPrefab;
         #endregion
-        
+
         #region Photon Callbacks
         
         void Start()
@@ -33,6 +33,7 @@ namespace Com.MyCompany.MyGame
                 PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(PhotonNetwork.LocalPlayer.ActorNumber % 10,0f,0f), Quaternion.identity, 0);
             }
         }
+
         public override void OnPlayerEnteredRoom(Player other)
         {
         }
