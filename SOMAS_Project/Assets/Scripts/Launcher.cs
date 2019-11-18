@@ -15,7 +15,7 @@ namespace Com.MyCompany.MyGame
 /// </summary>
 [Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players, and so new room will be created")]
 [SerializeField]
-private byte maxPlayersPerRoom = 4;
+private byte maxPlayersPerRoom = 2;
 
         #endregion
 
@@ -54,6 +54,7 @@ private byte maxPlayersPerRoom = 4;
         void Start()
         {
             //Connect();
+
         }
 
 
@@ -70,6 +71,8 @@ private byte maxPlayersPerRoom = 4;
         /// </summary>
         public void Connect()
         {
+
+            Debug.Log("CODE START");
             // we check if we are connected or not, we join if we are , else we initiate the connection to the server.
             if (PhotonNetwork.IsConnected)
             {
@@ -83,10 +86,12 @@ private byte maxPlayersPerRoom = 4;
                 PhotonNetwork.GameVersion = gameVersion;
                 PhotonNetwork.ConnectUsingSettings();
                 Debug.Log("Need to start the conection");
+
             }
         }
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
+            Debug.Log("ASJAJGSKSJK");
             //Doesn't get called on the local player, just remote players, so you would still need something to handle on the second player
             if (PhotonNetwork.PlayerList.Length == 2)
             {
@@ -96,9 +101,10 @@ private byte maxPlayersPerRoom = 4;
             {
                 Debug.Log("Not Enough PLayers");
             }
+            Debug.Log("number of players");
+            //Debug.Log(PhotonNetwork.PlayerList.Length);
 
         }
-
 
 
 
@@ -126,7 +132,7 @@ private byte maxPlayersPerRoom = 4;
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
+        Debug.Log(" No room available so we create one.\nCalling: PhotonNetwork.CreateRoom");
 
             // #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
             PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = this.maxPlayersPerRoom });
@@ -134,18 +140,19 @@ private byte maxPlayersPerRoom = 4;
 
     public override void OnJoinedRoom()
     {
-            Debug.Log("hello");
-        if (PhotonNetwork.PlayerList.Length == 2) 
+            Debug.Log("number of players");
+            Debug.Log(PhotonNetwork.PlayerList.Length);
+            if (PhotonNetwork.PlayerList.Length == 2) 
         {
                 changeSceneFlag = true;
                 Debug.Log("2 players yey");
             PhotonNetwork.LoadLevel ("Scene1");
 
         } 
-        else if (PhotonNetwork.PlayerList.Length == 1) 
+        else if (PhotonNetwork.PlayerList.Length == this.maxPlayersPerRoom) 
         {
             Debug.Log ("Not Enough Players");
-            //popup.SetActive (true);
+
         }
     }
        
