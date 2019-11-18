@@ -17,6 +17,7 @@ namespace Com.MyCompany.MyGame
 
 
         #region Photon Callbacks
+       
 
 
         /// <summary>
@@ -49,7 +50,9 @@ namespace Com.MyCompany.MyGame
 
         public void LeaveRoom()
         {
-            PhotonNetwork.LeaveRoom();
+            PhotonNetwork.Disconnect();
+            //PhotonNetwork.LeaveRoom();
+            PhotonNetwork.LoadLevel("LauncherScene");
         }
 
 
