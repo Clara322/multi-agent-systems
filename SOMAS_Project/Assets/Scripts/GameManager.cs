@@ -17,6 +17,7 @@ namespace Com.MyCompany.MyGame
         
         [Tooltip("The prefab to use for representing the player")]
         public GameObject playerPrefab;
+        
         #endregion
 
         #region Photon Callbacks
@@ -51,19 +52,14 @@ namespace Com.MyCompany.MyGame
         }
 
         #endregion
+        
+        #region Public
 
-        #region Private Methods
-
-
-        void LoadArena()
+        public void LeaveRoom()
         {
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                Debug.LogError("PhotonNetwork : Trying to Load a level but we are not the master Client");
-                return;
-            }
-            Debug.LogFormat("PhotonNetwork : Loading Level : {0}", PhotonNetwork.CurrentRoom.PlayerCount);
-            PhotonNetwork.LoadLevel("Scene1");
+            PhotonNetwork.Disconnect();
+            //PhotonNetwork.LeaveRoom();
+            PhotonNetwork.LoadLevel("LauncherScene");
         }
 
 
