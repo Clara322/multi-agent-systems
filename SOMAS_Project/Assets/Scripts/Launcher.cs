@@ -108,7 +108,7 @@ namespace Com.MyCompany.MyGame
             //Doesn't get called on the local player, just remote players, so you would still need something to handle on the second player
             if (PhotonNetwork.PlayerList.Length == maxPlayersPerRoom)
             {
-                PhotonNetwork.LoadLevel("Scene1");
+                PhotonNetwork.LoadLevel("MainScene");
             }
 
             Debug.Log("Not Enough PLayers");
@@ -152,7 +152,7 @@ namespace Com.MyCompany.MyGame
             if (PhotonNetwork.PlayerList.Length == maxPlayersPerRoom)
             {
                 Debug.Log("There are enough players!");
-                PhotonNetwork.LoadLevel("Scene1");
+                PhotonNetwork.LoadLevel("MainScene");
             }
         }
 

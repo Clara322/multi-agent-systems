@@ -527,6 +527,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Launcher
       objectReference: {fileID: 0}
+    - target: {fileID: 3091512475963631177, guid: 3541b5fadc223a649af7b3a8c3acfdec,
+        type: 3}
+      propertyPath: roomNameField
+      value: 
+      objectReference: {fileID: 541623226}
+    - target: {fileID: 3091512475963631177, guid: 3541b5fadc223a649af7b3a8c3acfdec,
+        type: 3}
+      propertyPath: joinButton
+      value: 
+      objectReference: {fileID: 815873737}
+    - target: {fileID: 3091512475963631177, guid: 3541b5fadc223a649af7b3a8c3acfdec,
+        type: 3}
+      propertyPath: cancelButton
+      value: 
+      objectReference: {fileID: 343414049}
+    - target: {fileID: 3091512475963631177, guid: 3541b5fadc223a649af7b3a8c3acfdec,
+        type: 3}
+      propertyPath: maxPlayersPerRoom
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3091512475963631179, guid: 3541b5fadc223a649af7b3a8c3acfdec,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -582,21 +602,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3091512475963631177, guid: 3541b5fadc223a649af7b3a8c3acfdec,
-        type: 3}
-      propertyPath: roomNameField
-      value: 
-      objectReference: {fileID: 541623226}
-    - target: {fileID: 3091512475963631177, guid: 3541b5fadc223a649af7b3a8c3acfdec,
-        type: 3}
-      propertyPath: joinButton
-      value: 
-      objectReference: {fileID: 815873737}
-    - target: {fileID: 3091512475963631177, guid: 3541b5fadc223a649af7b3a8c3acfdec,
-        type: 3}
-      propertyPath: cancelButton
-      value: 
-      objectReference: {fileID: 343414049}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3541b5fadc223a649af7b3a8c3acfdec, type: 3}
 --- !u!1001 &7066365350849652871
